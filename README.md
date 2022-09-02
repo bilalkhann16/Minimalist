@@ -8,6 +8,10 @@ This project was generated using [Nx](https://nx.dev).
 
 🔎 **Smart, Fast and Extensible Build System**
 
+## To run the Nest JS application
+
+```ng serve api```
+
 ## Quick Start & Documentation
 
 [Nx Documentation](https://nx.dev/angular)

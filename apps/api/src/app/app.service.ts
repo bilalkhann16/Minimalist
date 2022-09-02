@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Message } from '@mhsp-minimalist/api-interfaces';
+import { TaskDTO } from './tasks/task.dto';
+// import { mockTasks } from './tasks/tasks-mock';
 
 @Injectable()
 export class AppService {
