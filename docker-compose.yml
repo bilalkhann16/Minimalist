@@ -1,12 +1,27 @@
-version: '3.4'
-
+version: '3.8'
 services:
-  mhspminimalist:
-    image: mhspminimalist
+  nest-api:
+    container_name: nest-api-sun
     build:
       context: .
-      dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
+      dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 3333:3333
+
+  postgres:
+    image: postgres:13.5
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+volumes:
+  postgres:
+
+networks:
+  nestjs-crud:

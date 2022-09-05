@@ -2,7 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../../../../prisma/prisma.service'
 
 @Injectable()
 export class UsersService {

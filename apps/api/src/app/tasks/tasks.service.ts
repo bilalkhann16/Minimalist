@@ -2,8 +2,10 @@ import { Injectable, Get, Patch } from '@nestjs/common';
 import { repl } from '@nestjs/core';
 import { TaskDTO } from './task.dto';
 // import { mockTasks } from './tasks-mock';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../../../../prisma/prisma.service'
+import { HttpException, HttpStatus } from "@nestjs/common";
 import { Prisma } from '@prisma/client';
+
 
 @Injectable()
 export class TasksService {
@@ -18,7 +20,6 @@ export class TasksService {
         console.log(authorId);
         // return this.prisma.tasks.findUnique({ where: { username } });
         return this.prisma.tasks.findMany({ where: { authorId } });
-    
     }
 
     create(TaskDTO: TaskDTO){
@@ -33,12 +34,10 @@ export class TasksService {
 
     updateTaskPrisma(id, updateData: { title: string, status: string }) {
         id = parseInt(id);
+
         return this.prisma.tasks.update({
             where: { id },
             data: updateData,
         });
     }
-
-    
-
 }

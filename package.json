@@ -7,8 +7,11 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+
+    "start:migrate:dev": "prisma migrate deploy && nx serve api"
   },
+
   "private": true,
   "dependencies": {
     "@angular/animations": "~14.1.1",
@@ -27,6 +30,7 @@
     "@nrwl/angular": "14.5.10",
     "@prisma/client": "^4.3.0",
     "class-validator": "^0.13.2",
+    "npm": "^8.19.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.5.0",
     "swagger-ui-express": "^4.5.0",
