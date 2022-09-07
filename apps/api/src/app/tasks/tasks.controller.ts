@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Patch, Body, Param, Delete } from '@nestjs/common';
 import { TaskDTO } from './task.dto';
-// import { mockTasks } from './tasks-mock';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
@@ -20,17 +19,19 @@ export class TasksController {
     
     @Post()
     create(@Body() postData: TaskDTO) {
+        // console.log(TaskDTO);
+        // console.log(postData);
         return this.TasksService.create(postData);
     }
 
     @Delete(':id')
-    deteteTaskPrisma(@Param('id') id: number) {
-        return this.TasksService.detete(id);
+    deteteTaskPrisma(@Param('id') id: string) {
+        return this.TasksService.delete(+id);
     }
 
     @Patch(':id')
-    updateTaskPrisma(@Param('id') id: number, @Body() updateData: { title: string, status: string }) {
-        return this.TasksService.updateTaskPrisma(id, updateData);
+    updateTaskPrisma(@Param('id') id: string, @Body() updateData: { title: string, status: string }) {
+        return this.TasksService.updateTaskPrisma(+id, updateData);
     }
 
 

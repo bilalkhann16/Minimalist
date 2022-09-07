@@ -1,10 +1,8 @@
-import { Injectable, Get, Patch } from '@nestjs/common';
-import { repl } from '@nestjs/core';
+import { Injectable, Get, Patch, HttpException, HttpStatus, NotFoundException} from '@nestjs/common';
 import { TaskDTO } from './task.dto';
-// import { mockTasks } from './tasks-mock';
 import { PrismaService } from '../../../../../prisma/prisma.service'
-import { HttpException, HttpStatus } from "@nestjs/common";
 import { Prisma } from '@prisma/client';
+import { stringify } from 'querystring';
 
 
 @Injectable()
@@ -22,22 +20,51 @@ export class TasksService {
         return this.prisma.tasks.findMany({ where: { authorId } });
     }
 
-    create(TaskDTO: TaskDTO){
+    async create(TaskDTO: TaskDTO){
         const {authorId, title, status} = TaskDTO;
-        return this.prisma.tasks.create({ data: { authorId, title, status } });
+        const user = await this.prisma.user.findUnique({
+            where: {
+              username: authorId,
+            },
+          })
+        
+        if (user){
+            return this.prisma.tasks.create({ data: { authorId, title, status } });
+        } else{
+            throw new NotFoundException("User doesnot exist, Check the authorId");
+        }
     }
 
-    detete(id) {
-        id = parseInt(id);
-        return this.prisma.tasks.delete({ where: { id } });
+    async delete(id: number) {
+        const user = await this.prisma.tasks.findUnique({
+            where: {
+              id: id,
+            },
+        })
+
+        if (user){
+            return this.prisma.tasks.delete({ where: { id } });
+        } else{
+            throw new NotFoundException("Task doesnot exist");
+        }
     }
 
-    updateTaskPrisma(id, updateData: { title: string, status: string }) {
-        id = parseInt(id);
 
-        return this.prisma.tasks.update({
-            where: { id },
-            data: updateData,
-        });
+    async updateTaskPrisma(id: number, updateData: { title: string, status: string }) {
+        // id = stringify(id);
+        const user = await this.prisma.tasks.findUnique({
+            where: {
+              id: id,
+            },
+        })
+
+        if (user){
+            return this.prisma.tasks.update({
+                    where: { id },
+                    data: updateData,
+            });
+        } else{
+            throw new NotFoundException("Task doesnot exist");
+        }
     }
 }

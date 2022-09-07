@@ -4,7 +4,5 @@ COPY . .
 COPY /prisma ./prisma/
 RUN npm install
 EXPOSE 3333
-EXPOSE 9229
 
 CMD [  "npm", "run", "start:migrate:dev" ]
-# CMD ["npm", "run", "start", "api"]
