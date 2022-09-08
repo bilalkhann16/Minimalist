@@ -38,4 +38,27 @@ export class UsersService {
           },
     });
   }
+
+  async update(authorId: string, updateUserDto: UpdateUserDto) {
+    const updateUser = await this.prisma.user.findUnique({
+      where: {
+        username: authorId,
+      },
+    });
+
+    if (!updateUser || updateUser.username !== authorId) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.prisma.user.update({
+      where: {
+        username: authorId,
+      },
+      data: {
+        ...updateUserDto,
+      },
+    });
+    
+  }
+
 }

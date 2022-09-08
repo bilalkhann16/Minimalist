@@ -1,5 +1,6 @@
-import { Injectable, Get, Patch, HttpException, HttpStatus, NotFoundException} from '@nestjs/common';
-import { TaskDTO } from './task.dto';
+import { Injectable, Get, Patch, HttpException, HttpStatus, NotFoundException, ForbiddenException} from '@nestjs/common';
+import { TaskDTO } from './dto/task.dto';
+import { UpdateTaskDTO } from './dto/update-task.dto';
 import { PrismaService } from '../../../../../prisma/prisma.service'
 import { Prisma } from '@prisma/client';
 import { stringify } from 'querystring';
@@ -50,21 +51,28 @@ export class TasksService {
     }
 
 
-    async updateTaskPrisma(id: number, updateData: { title: string, status: string }) {
-        // id = stringify(id);
-        const user = await this.prisma.tasks.findUnique({
+    async update(taskId: number, updateTaskDto: UpdateTaskDTO){
+        const updateTask = await this.prisma.tasks.findUnique({
             where: {
-              id: id,
+              id: taskId,
             },
-        })
+          });
+      
+          if (!updateTask || updateTask.id !== taskId) {
+            throw new ForbiddenException(`Task with id ${taskId} not found!`);
+          }
+      
+          return this.prisma.tasks.update({
+            where: {
+              id: taskId,
+            },
+            data: {
+                ...updateTaskDto
+            },
+          });
 
-        if (user){
-            return this.prisma.tasks.update({
-                    where: { id },
-                    data: updateData,
-            });
-        } else{
-            throw new NotFoundException("Task doesnot exist");
-        }
     }
+          
+          
+
 }
