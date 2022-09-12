@@ -2,7 +2,7 @@ FROM node:14
 WORKDIR /workspace
 COPY . .
 COPY /prisma ./prisma/
-RUN npm install
+RUN yarn install
 EXPOSE 3333
 
-CMD [  "npm", "run", "start:migrate:dev" ]
+CMD [  "yarn", "run", "start:migrate:serve" ]

@@ -1,7 +1,7 @@
 import { ConflictException, ConsoleLogger, Injectable, NotImplementedException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Prisma } from '@prisma/client';
+// import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../../../../prisma/prisma.service'
 import { NotFoundException } from '@nestjs/common';
 
@@ -32,11 +32,16 @@ export class UsersService {
     if (!deleteUser || deleteUser.username !== username) {
           throw new NotFoundException('User not found');
     }
-    return this.prisma.user.delete({
-          where: {
-            username: username,
-          },
-    });
+    try {
+      const prismaUser = await this.prisma.user.delete({
+        where: {
+          username: username,
+        },
+      });
+        return prismaUser;
+    } catch (e){
+      throw new NotFoundException('Something went wrong');
+    }
   }
 
   async update(authorId: string, updateUserDto: UpdateUserDto) {
