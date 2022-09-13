@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, isString } from 'class-validator';
 
 export class UpdateTaskDTO{
@@ -6,10 +5,12 @@ export class UpdateTaskDTO{
     id?: number;
 
     @IsString()
+    @IsOptional()
     title?: string;
     
     @IsString()
-    status: 'OPEN' | 'PENDING' | 'CLOSED';
+    @IsOptional()
+    status?: string;
 
     @IsString()
     authorId?: string;

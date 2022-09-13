@@ -20,8 +20,7 @@ export class TasksController {
     
     @Post()
     create(@Body() postData: TaskDTO) {
-        // console.log(TaskDTO);
-        // console.log(postData);
+        console.log(postData);
         return this.TasksService.create(postData);
     }
 
@@ -29,12 +28,7 @@ export class TasksController {
     deteteTaskPrisma(@Param('id') id: string) {
         return this.TasksService.delete(+id);
     }
-
-    // @Patch(':id')
-    // updateTaskPrisma(@Param('id') id: string, @Body() updateData: { title: string, status: string }) {
-    //     return this.TasksService.updateTaskPrisma(+id, updateData);
-    // }
-
+    
     @Patch(':id')
     updateTaskPrisma(@Param('id') id: string, @Body() updateData: UpdateTaskDTO) {
         return this.TasksService.update(+id, updateData);

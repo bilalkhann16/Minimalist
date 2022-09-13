@@ -3,7 +3,6 @@ import { TaskDTO } from './dto/task.dto';
 import { UpdateTaskDTO } from './dto/update-task.dto';
 import { PrismaService } from '../../../../../prisma/prisma.service'
 import { Prisma } from '@prisma/client';
-import { stringify } from 'querystring';
 
 
 @Injectable()
@@ -15,9 +14,7 @@ export class TasksService {
     }
 
     findOne(authorId: string) {
-        // return `This action returns a #${id} user`;
         console.log(authorId);
-        // return this.prisma.tasks.findUnique({ where: { username } });
         return this.prisma.tasks.findMany({ where: { authorId } });
     }
 
@@ -50,29 +47,30 @@ export class TasksService {
         }
     }
 
+    async update(taskId: number, UpdateTaskDTO: UpdateTaskDTO){
+      const {authorId, title, status} = UpdateTaskDTO;
 
-    async update(taskId: number, updateTaskDto: UpdateTaskDTO){
-        const updateTask = await this.prisma.tasks.findUnique({
-            where: {
-              id: taskId,
-            },
-          });
-      
-          if (!updateTask || updateTask.id !== taskId) {
-            throw new ForbiddenException(`Task with id ${taskId} not found!`);
+      const updateTask = await this.prisma.tasks.findUnique({
+          where: {
+            id: taskId,
           }
-      
-          return this.prisma.tasks.update({
-            where: {
-              id: taskId,
-            },
-            data: {
-                ...updateTaskDto
-            },
-          });
+        });
+    
+        if (!updateTask || updateTask.id !== taskId) {
+          throw new ForbiddenException(`Task with id ${taskId} not found!`);
+        }
 
-    }
-          
+        try { 
+          return await this.prisma.tasks.update({
+          where: {
+            id: taskId,
+          },
+          data: {authorId, title, status},
+        });
+      } catch{
+        throw new NotFoundException('authorId is not correct');
+      }
+  }
           
 
 }
