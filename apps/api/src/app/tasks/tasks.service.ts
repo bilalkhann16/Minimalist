@@ -27,7 +27,7 @@ export class TasksService {
           })
         
         if (user){
-            return this.prisma.tasks.create({ data: { authorId, title, status } });
+            return await this.prisma.tasks.create({ data: { authorId, title, status } });
         } else{
             throw new NotFoundException("User doesnot exist, Check the authorId");
         }
@@ -41,7 +41,7 @@ export class TasksService {
         })
 
         if (user){
-            return this.prisma.tasks.delete({ where: { id } });
+            return await this.prisma.tasks.delete({ where: { id } });
         } else{
             throw new NotFoundException("Task doesnot exist");
         }

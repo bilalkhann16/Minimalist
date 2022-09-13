@@ -4,10 +4,10 @@
   "include": [],
   "references": [
     {
-      "path": "/apps/api/tsconfig.app.json"
+      "path": "./tsconfig.app.json"
     },
     {
-      "path": "/apps/api/tsconfig.spec.json"
+      "path": "./tsconfig.spec.json"
     }
   ]
 }

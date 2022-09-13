@@ -21,7 +21,7 @@ model Tasks {
   id        Int      @default(autoincrement()) @id
   createdAt       DateTime @default(now())
   title       String
-  status      Boolean
+  status      String
   authorId    String
   author User @relation(fields: [authorId], references: [username])
 }

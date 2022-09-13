@@ -10,12 +10,9 @@ export class TaskDTO{
     @IsNotEmpty()
     title: string;
     
-    // @IsBoolean()
-    // @ApiProperty({ required: true, default: true })
     @IsString()
     @IsNotEmpty()
     status: string;
-    // status?: boolean = true;
 
     @IsString()
     @IsNotEmpty()

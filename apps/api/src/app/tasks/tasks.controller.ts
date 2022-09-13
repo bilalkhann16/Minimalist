@@ -28,12 +28,11 @@ export class TasksController {
     deteteTaskPrisma(@Param('id') id: string) {
         return this.TasksService.delete(+id);
     }
-    
+
     @Patch(':id')
     updateTaskPrisma(@Param('id') id: string, @Body() updateData: UpdateTaskDTO) {
         return this.TasksService.update(+id, updateData);
     }
-
 
 
 }
