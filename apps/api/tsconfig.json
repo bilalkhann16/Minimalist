@@ -1,7 +1,15 @@
 {
   "extends": "../../tsconfig.base.json",
-  "files": [],
+  "files": [
+  ],
   "include": [],
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "experimentalDecorators": true,
+    "allowJs": false,
+    "module": "commonjs",
+    "types": ["jest", "node"]
+  },
   "references": [
     {
       "path": "./tsconfig.app.json"

@@ -7,6 +7,13 @@ export default {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "module": "commonjs",
+    "types": ["jest", "node"]
+  },
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
